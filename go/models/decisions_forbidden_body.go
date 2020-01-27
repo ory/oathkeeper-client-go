@@ -11,7 +11,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// DecisionsForbiddenBody DecisionsForbiddenBody decisions forbidden body
+// DecisionsForbiddenBody DecisionsForbiddenBody DecisionsForbiddenBody decisions forbidden body
 // swagger:model DecisionsForbiddenBody
 type DecisionsForbiddenBody struct {
 

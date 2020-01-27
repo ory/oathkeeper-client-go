@@ -11,7 +11,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// DecisionsNotFoundBody DecisionsNotFoundBody decisions not found body
+// DecisionsNotFoundBody DecisionsNotFoundBody DecisionsNotFoundBody decisions not found body
 // swagger:model DecisionsNotFoundBody
 type DecisionsNotFoundBody struct {
 

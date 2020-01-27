@@ -11,7 +11,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// DecisionsInternalServerErrorBody DecisionsInternalServerErrorBody decisions internal server error body
+// DecisionsInternalServerErrorBody DecisionsInternalServerErrorBody DecisionsInternalServerErrorBody decisions internal server error body
 // swagger:model DecisionsInternalServerErrorBody
 type DecisionsInternalServerErrorBody struct {
 

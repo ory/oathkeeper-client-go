@@ -11,7 +11,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// DecisionsUnauthorizedBody DecisionsUnauthorizedBody decisions unauthorized body
+// DecisionsUnauthorizedBody DecisionsUnauthorizedBody DecisionsUnauthorizedBody decisions unauthorized body
 // swagger:model DecisionsUnauthorizedBody
 type DecisionsUnauthorizedBody struct {
 
