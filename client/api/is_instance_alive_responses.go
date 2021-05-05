@@ -6,15 +6,15 @@ package api
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/ory/oathkeeper-client-go/models"
+	"github.com/ory/oathkeeper-client-go/models"
 )
 
 // IsInstanceAliveReader is a Reader for the IsInstanceAlive structure.
@@ -37,9 +37,8 @@ func (o *IsInstanceAliveReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -48,7 +47,7 @@ func NewIsInstanceAliveOK() *IsInstanceAliveOK {
 	return &IsInstanceAliveOK{}
 }
 
-/*IsInstanceAliveOK handles this case with default header values.
+/* IsInstanceAliveOK describes a response with status code 200, with default header values.
 
 healthStatus
 */
@@ -59,7 +58,6 @@ type IsInstanceAliveOK struct {
 func (o *IsInstanceAliveOK) Error() string {
 	return fmt.Sprintf("[GET /health/alive][%d] isInstanceAliveOK  %+v", 200, o.Payload)
 }
-
 func (o *IsInstanceAliveOK) GetPayload() *models.HealthStatus {
 	return o.Payload
 }
@@ -81,7 +79,7 @@ func NewIsInstanceAliveInternalServerError() *IsInstanceAliveInternalServerError
 	return &IsInstanceAliveInternalServerError{}
 }
 
-/*IsInstanceAliveInternalServerError handles this case with default header values.
+/* IsInstanceAliveInternalServerError describes a response with status code 500, with default header values.
 
 The standard error format
 */
@@ -92,7 +90,6 @@ type IsInstanceAliveInternalServerError struct {
 func (o *IsInstanceAliveInternalServerError) Error() string {
 	return fmt.Sprintf("[GET /health/alive][%d] isInstanceAliveInternalServerError  %+v", 500, o.Payload)
 }
-
 func (o *IsInstanceAliveInternalServerError) GetPayload() *IsInstanceAliveInternalServerErrorBody {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ type IsInstanceAliveInternalServerErrorBody struct {
 	Code int64 `json:"code,omitempty"`
 
 	// details
-	Details []map[string]interface{} `json:"details"`
+	Details []interface{} `json:"details"`
 
 	// message
 	Message string `json:"message,omitempty"`
@@ -135,6 +132,11 @@ type IsInstanceAliveInternalServerErrorBody struct {
 
 // Validate validates this is instance alive internal server error body
 func (o *IsInstanceAliveInternalServerErrorBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this is instance alive internal server error body based on context it is used
+func (o *IsInstanceAliveInternalServerErrorBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

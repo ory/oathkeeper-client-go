@@ -10,10 +10,9 @@ import (
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/ory/oathkeeper-client-go/models"
+	"github.com/ory/oathkeeper-client-go/models"
 )
 
 // IsInstanceReadyReader is a Reader for the IsInstanceReady structure.
@@ -36,9 +35,8 @@ func (o *IsInstanceReadyReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -47,7 +45,7 @@ func NewIsInstanceReadyOK() *IsInstanceReadyOK {
 	return &IsInstanceReadyOK{}
 }
 
-/*IsInstanceReadyOK handles this case with default header values.
+/* IsInstanceReadyOK describes a response with status code 200, with default header values.
 
 healthStatus
 */
@@ -58,7 +56,6 @@ type IsInstanceReadyOK struct {
 func (o *IsInstanceReadyOK) Error() string {
 	return fmt.Sprintf("[GET /health/ready][%d] isInstanceReadyOK  %+v", 200, o.Payload)
 }
-
 func (o *IsInstanceReadyOK) GetPayload() *models.HealthStatus {
 	return o.Payload
 }
@@ -80,7 +77,7 @@ func NewIsInstanceReadyServiceUnavailable() *IsInstanceReadyServiceUnavailable {
 	return &IsInstanceReadyServiceUnavailable{}
 }
 
-/*IsInstanceReadyServiceUnavailable handles this case with default header values.
+/* IsInstanceReadyServiceUnavailable describes a response with status code 503, with default header values.
 
 healthNotReadyStatus
 */
@@ -91,7 +88,6 @@ type IsInstanceReadyServiceUnavailable struct {
 func (o *IsInstanceReadyServiceUnavailable) Error() string {
 	return fmt.Sprintf("[GET /health/ready][%d] isInstanceReadyServiceUnavailable  %+v", 503, o.Payload)
 }
-
 func (o *IsInstanceReadyServiceUnavailable) GetPayload() *models.HealthNotReadyStatus {
 	return o.Payload
 }
