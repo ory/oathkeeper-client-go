@@ -1,20 +1,10 @@
-# oathkeeper-client-
+# ory/oathkeeper-client-go-go
 
-This is the official Ory Oathkeeper SDK for .
+This is the official Ory Oathkeeper SDK for go.
 
-## Published on Package Managers
+## Installation
 
-This SDK is published for several popular languages on their respective package repositories:
-
-- [Dart (pub)](https://pub.dev/packages/ory_oathkeeper_client)
-- [.NET (nuget)](https://www.nuget.org/packages/Ory.Oathkeeper.Client/)
-- [Go](https://github.com/ory/oathkeeper-client)
-- [Java (Maven Central)](https://search.maven.org/artifact/sh.ory.oathkeeper/oathkeeper-client)
-- [JavaScript (npm)](https://www.npmjs.com/package/@ory/oathkeeper-client)
-- [PHP (Packagist)](https://packagist.org/packages/ory/oathkeeper-client)
-- [Python (pip)](https://pypi.org/project/ory-oathkeeper-client/)
-- [Ruby (Gem)](https://rubygems.org/gems/ory-oathkeeper-client/)
-- [Rust (Crate)](https://crates.io/crates/ory-oathkeeper-client/)
+package repository is missing, please open an issue about this.
 
 ## Generation
 
