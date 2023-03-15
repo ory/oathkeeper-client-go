@@ -3,7 +3,7 @@ ORY Oathkeeper
 
 ORY Oathkeeper is a reverse proxy that checks the HTTP Authorization for validity against a set of rules. This service uses Hydra to validate access tokens and policies.
 
-API version: v0.39.4
+API version: v0.40.2
 Contact: hi@ory.am
 */
 
@@ -15,35 +15,35 @@ import (
 	"encoding/json"
 )
 
-// GetWellKnownJSONWebKeys500Response struct for GetWellKnownJSONWebKeys500Response
-type GetWellKnownJSONWebKeys500Response struct {
+// GenericError The standard error format
+type GenericError struct {
 	Code *int64 `json:"code,omitempty"`
-	Details []map[string]interface{} `json:"details,omitempty"`
+	Details []map[string]map[string]interface{} `json:"details,omitempty"`
 	Message *string `json:"message,omitempty"`
 	Reason *string `json:"reason,omitempty"`
 	Request *string `json:"request,omitempty"`
 	Status *string `json:"status,omitempty"`
 }
 
-// NewGetWellKnownJSONWebKeys500Response instantiates a new GetWellKnownJSONWebKeys500Response object
+// NewGenericError instantiates a new GenericError object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetWellKnownJSONWebKeys500Response() *GetWellKnownJSONWebKeys500Response {
-	this := GetWellKnownJSONWebKeys500Response{}
+func NewGenericError() *GenericError {
+	this := GenericError{}
 	return &this
 }
 
-// NewGetWellKnownJSONWebKeys500ResponseWithDefaults instantiates a new GetWellKnownJSONWebKeys500Response object
+// NewGenericErrorWithDefaults instantiates a new GenericError object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewGetWellKnownJSONWebKeys500ResponseWithDefaults() *GetWellKnownJSONWebKeys500Response {
-	this := GetWellKnownJSONWebKeys500Response{}
+func NewGenericErrorWithDefaults() *GenericError {
+	this := GenericError{}
 	return &this
 }
 
 // GetCode returns the Code field value if set, zero value otherwise.
-func (o *GetWellKnownJSONWebKeys500Response) GetCode() int64 {
+func (o *GenericError) GetCode() int64 {
 	if o == nil || o.Code == nil {
 		var ret int64
 		return ret
@@ -53,7 +53,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetCode() int64 {
 
 // GetCodeOk returns a tuple with the Code field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetWellKnownJSONWebKeys500Response) GetCodeOk() (*int64, bool) {
+func (o *GenericError) GetCodeOk() (*int64, bool) {
 	if o == nil || o.Code == nil {
 		return nil, false
 	}
@@ -61,7 +61,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetCodeOk() (*int64, bool) {
 }
 
 // HasCode returns a boolean if a field has been set.
-func (o *GetWellKnownJSONWebKeys500Response) HasCode() bool {
+func (o *GenericError) HasCode() bool {
 	if o != nil && o.Code != nil {
 		return true
 	}
@@ -70,14 +70,14 @@ func (o *GetWellKnownJSONWebKeys500Response) HasCode() bool {
 }
 
 // SetCode gets a reference to the given int64 and assigns it to the Code field.
-func (o *GetWellKnownJSONWebKeys500Response) SetCode(v int64) {
+func (o *GenericError) SetCode(v int64) {
 	o.Code = &v
 }
 
 // GetDetails returns the Details field value if set, zero value otherwise.
-func (o *GetWellKnownJSONWebKeys500Response) GetDetails() []map[string]interface{} {
+func (o *GenericError) GetDetails() []map[string]map[string]interface{} {
 	if o == nil || o.Details == nil {
-		var ret []map[string]interface{}
+		var ret []map[string]map[string]interface{}
 		return ret
 	}
 	return o.Details
@@ -85,7 +85,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetDetails() []map[string]interface
 
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetWellKnownJSONWebKeys500Response) GetDetailsOk() ([]map[string]interface{}, bool) {
+func (o *GenericError) GetDetailsOk() ([]map[string]map[string]interface{}, bool) {
 	if o == nil || o.Details == nil {
 		return nil, false
 	}
@@ -93,7 +93,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetDetailsOk() ([]map[string]interf
 }
 
 // HasDetails returns a boolean if a field has been set.
-func (o *GetWellKnownJSONWebKeys500Response) HasDetails() bool {
+func (o *GenericError) HasDetails() bool {
 	if o != nil && o.Details != nil {
 		return true
 	}
@@ -101,13 +101,13 @@ func (o *GetWellKnownJSONWebKeys500Response) HasDetails() bool {
 	return false
 }
 
-// SetDetails gets a reference to the given []map[string]interface{} and assigns it to the Details field.
-func (o *GetWellKnownJSONWebKeys500Response) SetDetails(v []map[string]interface{}) {
+// SetDetails gets a reference to the given []map[string]map[string]interface{} and assigns it to the Details field.
+func (o *GenericError) SetDetails(v []map[string]map[string]interface{}) {
 	o.Details = v
 }
 
 // GetMessage returns the Message field value if set, zero value otherwise.
-func (o *GetWellKnownJSONWebKeys500Response) GetMessage() string {
+func (o *GenericError) GetMessage() string {
 	if o == nil || o.Message == nil {
 		var ret string
 		return ret
@@ -117,7 +117,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetMessage() string {
 
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetWellKnownJSONWebKeys500Response) GetMessageOk() (*string, bool) {
+func (o *GenericError) GetMessageOk() (*string, bool) {
 	if o == nil || o.Message == nil {
 		return nil, false
 	}
@@ -125,7 +125,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetMessageOk() (*string, bool) {
 }
 
 // HasMessage returns a boolean if a field has been set.
-func (o *GetWellKnownJSONWebKeys500Response) HasMessage() bool {
+func (o *GenericError) HasMessage() bool {
 	if o != nil && o.Message != nil {
 		return true
 	}
@@ -134,12 +134,12 @@ func (o *GetWellKnownJSONWebKeys500Response) HasMessage() bool {
 }
 
 // SetMessage gets a reference to the given string and assigns it to the Message field.
-func (o *GetWellKnownJSONWebKeys500Response) SetMessage(v string) {
+func (o *GenericError) SetMessage(v string) {
 	o.Message = &v
 }
 
 // GetReason returns the Reason field value if set, zero value otherwise.
-func (o *GetWellKnownJSONWebKeys500Response) GetReason() string {
+func (o *GenericError) GetReason() string {
 	if o == nil || o.Reason == nil {
 		var ret string
 		return ret
@@ -149,7 +149,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetReason() string {
 
 // GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetWellKnownJSONWebKeys500Response) GetReasonOk() (*string, bool) {
+func (o *GenericError) GetReasonOk() (*string, bool) {
 	if o == nil || o.Reason == nil {
 		return nil, false
 	}
@@ -157,7 +157,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetReasonOk() (*string, bool) {
 }
 
 // HasReason returns a boolean if a field has been set.
-func (o *GetWellKnownJSONWebKeys500Response) HasReason() bool {
+func (o *GenericError) HasReason() bool {
 	if o != nil && o.Reason != nil {
 		return true
 	}
@@ -166,12 +166,12 @@ func (o *GetWellKnownJSONWebKeys500Response) HasReason() bool {
 }
 
 // SetReason gets a reference to the given string and assigns it to the Reason field.
-func (o *GetWellKnownJSONWebKeys500Response) SetReason(v string) {
+func (o *GenericError) SetReason(v string) {
 	o.Reason = &v
 }
 
 // GetRequest returns the Request field value if set, zero value otherwise.
-func (o *GetWellKnownJSONWebKeys500Response) GetRequest() string {
+func (o *GenericError) GetRequest() string {
 	if o == nil || o.Request == nil {
 		var ret string
 		return ret
@@ -181,7 +181,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetRequest() string {
 
 // GetRequestOk returns a tuple with the Request field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetWellKnownJSONWebKeys500Response) GetRequestOk() (*string, bool) {
+func (o *GenericError) GetRequestOk() (*string, bool) {
 	if o == nil || o.Request == nil {
 		return nil, false
 	}
@@ -189,7 +189,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetRequestOk() (*string, bool) {
 }
 
 // HasRequest returns a boolean if a field has been set.
-func (o *GetWellKnownJSONWebKeys500Response) HasRequest() bool {
+func (o *GenericError) HasRequest() bool {
 	if o != nil && o.Request != nil {
 		return true
 	}
@@ -198,12 +198,12 @@ func (o *GetWellKnownJSONWebKeys500Response) HasRequest() bool {
 }
 
 // SetRequest gets a reference to the given string and assigns it to the Request field.
-func (o *GetWellKnownJSONWebKeys500Response) SetRequest(v string) {
+func (o *GenericError) SetRequest(v string) {
 	o.Request = &v
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise.
-func (o *GetWellKnownJSONWebKeys500Response) GetStatus() string {
+func (o *GenericError) GetStatus() string {
 	if o == nil || o.Status == nil {
 		var ret string
 		return ret
@@ -213,7 +213,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetStatus() string {
 
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetWellKnownJSONWebKeys500Response) GetStatusOk() (*string, bool) {
+func (o *GenericError) GetStatusOk() (*string, bool) {
 	if o == nil || o.Status == nil {
 		return nil, false
 	}
@@ -221,7 +221,7 @@ func (o *GetWellKnownJSONWebKeys500Response) GetStatusOk() (*string, bool) {
 }
 
 // HasStatus returns a boolean if a field has been set.
-func (o *GetWellKnownJSONWebKeys500Response) HasStatus() bool {
+func (o *GenericError) HasStatus() bool {
 	if o != nil && o.Status != nil {
 		return true
 	}
@@ -230,11 +230,11 @@ func (o *GetWellKnownJSONWebKeys500Response) HasStatus() bool {
 }
 
 // SetStatus gets a reference to the given string and assigns it to the Status field.
-func (o *GetWellKnownJSONWebKeys500Response) SetStatus(v string) {
+func (o *GenericError) SetStatus(v string) {
 	o.Status = &v
 }
 
-func (o GetWellKnownJSONWebKeys500Response) MarshalJSON() ([]byte, error) {
+func (o GenericError) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Code != nil {
 		toSerialize["code"] = o.Code
@@ -257,38 +257,38 @@ func (o GetWellKnownJSONWebKeys500Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullableGetWellKnownJSONWebKeys500Response struct {
-	value *GetWellKnownJSONWebKeys500Response
+type NullableGenericError struct {
+	value *GenericError
 	isSet bool
 }
 
-func (v NullableGetWellKnownJSONWebKeys500Response) Get() *GetWellKnownJSONWebKeys500Response {
+func (v NullableGenericError) Get() *GenericError {
 	return v.value
 }
 
-func (v *NullableGetWellKnownJSONWebKeys500Response) Set(val *GetWellKnownJSONWebKeys500Response) {
+func (v *NullableGenericError) Set(val *GenericError) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableGetWellKnownJSONWebKeys500Response) IsSet() bool {
+func (v NullableGenericError) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableGetWellKnownJSONWebKeys500Response) Unset() {
+func (v *NullableGenericError) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableGetWellKnownJSONWebKeys500Response(val *GetWellKnownJSONWebKeys500Response) *NullableGetWellKnownJSONWebKeys500Response {
-	return &NullableGetWellKnownJSONWebKeys500Response{value: val, isSet: true}
+func NewNullableGenericError(val *GenericError) *NullableGenericError {
+	return &NullableGenericError{value: val, isSet: true}
 }
 
-func (v NullableGetWellKnownJSONWebKeys500Response) MarshalJSON() ([]byte, error) {
+func (v NullableGenericError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableGetWellKnownJSONWebKeys500Response) UnmarshalJSON(src []byte) error {
+func (v *NullableGenericError) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
