@@ -3,7 +3,7 @@ ORY Oathkeeper
 
 ORY Oathkeeper is a reverse proxy that checks the HTTP Authorization for validity against a set of rules. This service uses Hydra to validate access tokens and policies.
 
-API version: v0.40.6
+API version: v0.40.8
 Contact: hi@ory.am
 */
 
@@ -14,13 +14,13 @@ package client
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
 
-type HealthApi interface {
+type HealthAPI interface {
 
 	/*
 	IsInstanceAlive Check alive status
@@ -35,13 +35,13 @@ Be aware that if you are running multiple nodes of this service, the health stat
 refer to the cluster state, only to a single instance.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return HealthApiIsInstanceAliveRequest
+	@return HealthAPIIsInstanceAliveRequest
 	*/
-	IsInstanceAlive(ctx context.Context) HealthApiIsInstanceAliveRequest
+	IsInstanceAlive(ctx context.Context) HealthAPIIsInstanceAliveRequest
 
 	// IsInstanceAliveExecute executes the request
 	//  @return HealthStatus
-	IsInstanceAliveExecute(r HealthApiIsInstanceAliveRequest) (*HealthStatus, *http.Response, error)
+	IsInstanceAliveExecute(r HealthAPIIsInstanceAliveRequest) (*HealthStatus, *http.Response, error)
 
 	/*
 	IsInstanceReady Check readiness status
@@ -56,24 +56,24 @@ Be aware that if you are running multiple nodes of this service, the health stat
 refer to the cluster state, only to a single instance.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return HealthApiIsInstanceReadyRequest
+	@return HealthAPIIsInstanceReadyRequest
 	*/
-	IsInstanceReady(ctx context.Context) HealthApiIsInstanceReadyRequest
+	IsInstanceReady(ctx context.Context) HealthAPIIsInstanceReadyRequest
 
 	// IsInstanceReadyExecute executes the request
 	//  @return HealthStatus
-	IsInstanceReadyExecute(r HealthApiIsInstanceReadyRequest) (*HealthStatus, *http.Response, error)
+	IsInstanceReadyExecute(r HealthAPIIsInstanceReadyRequest) (*HealthStatus, *http.Response, error)
 }
 
-// HealthApiService HealthApi service
-type HealthApiService service
+// HealthAPIService HealthAPI service
+type HealthAPIService service
 
-type HealthApiIsInstanceAliveRequest struct {
+type HealthAPIIsInstanceAliveRequest struct {
 	ctx context.Context
-	ApiService HealthApi
+	ApiService HealthAPI
 }
 
-func (r HealthApiIsInstanceAliveRequest) Execute() (*HealthStatus, *http.Response, error) {
+func (r HealthAPIIsInstanceAliveRequest) Execute() (*HealthStatus, *http.Response, error) {
 	return r.ApiService.IsInstanceAliveExecute(r)
 }
 
@@ -90,10 +90,10 @@ Be aware that if you are running multiple nodes of this service, the health stat
 refer to the cluster state, only to a single instance.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return HealthApiIsInstanceAliveRequest
+ @return HealthAPIIsInstanceAliveRequest
 */
-func (a *HealthApiService) IsInstanceAlive(ctx context.Context) HealthApiIsInstanceAliveRequest {
-	return HealthApiIsInstanceAliveRequest{
+func (a *HealthAPIService) IsInstanceAlive(ctx context.Context) HealthAPIIsInstanceAliveRequest {
+	return HealthAPIIsInstanceAliveRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -101,7 +101,7 @@ func (a *HealthApiService) IsInstanceAlive(ctx context.Context) HealthApiIsInsta
 
 // Execute executes the request
 //  @return HealthStatus
-func (a *HealthApiService) IsInstanceAliveExecute(r HealthApiIsInstanceAliveRequest) (*HealthStatus, *http.Response, error) {
+func (a *HealthAPIService) IsInstanceAliveExecute(r HealthAPIIsInstanceAliveRequest) (*HealthStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -109,7 +109,7 @@ func (a *HealthApiService) IsInstanceAliveExecute(r HealthApiIsInstanceAliveRequ
 		localVarReturnValue  *HealthStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HealthApiService.IsInstanceAlive")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HealthAPIService.IsInstanceAlive")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -147,9 +147,9 @@ func (a *HealthApiService) IsInstanceAliveExecute(r HealthApiIsInstanceAliveRequ
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -165,7 +165,8 @@ func (a *HealthApiService) IsInstanceAliveExecute(r HealthApiIsInstanceAliveRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -181,12 +182,12 @@ func (a *HealthApiService) IsInstanceAliveExecute(r HealthApiIsInstanceAliveRequ
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type HealthApiIsInstanceReadyRequest struct {
+type HealthAPIIsInstanceReadyRequest struct {
 	ctx context.Context
-	ApiService HealthApi
+	ApiService HealthAPI
 }
 
-func (r HealthApiIsInstanceReadyRequest) Execute() (*HealthStatus, *http.Response, error) {
+func (r HealthAPIIsInstanceReadyRequest) Execute() (*HealthStatus, *http.Response, error) {
 	return r.ApiService.IsInstanceReadyExecute(r)
 }
 
@@ -203,10 +204,10 @@ Be aware that if you are running multiple nodes of this service, the health stat
 refer to the cluster state, only to a single instance.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return HealthApiIsInstanceReadyRequest
+ @return HealthAPIIsInstanceReadyRequest
 */
-func (a *HealthApiService) IsInstanceReady(ctx context.Context) HealthApiIsInstanceReadyRequest {
-	return HealthApiIsInstanceReadyRequest{
+func (a *HealthAPIService) IsInstanceReady(ctx context.Context) HealthAPIIsInstanceReadyRequest {
+	return HealthAPIIsInstanceReadyRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -214,7 +215,7 @@ func (a *HealthApiService) IsInstanceReady(ctx context.Context) HealthApiIsInsta
 
 // Execute executes the request
 //  @return HealthStatus
-func (a *HealthApiService) IsInstanceReadyExecute(r HealthApiIsInstanceReadyRequest) (*HealthStatus, *http.Response, error) {
+func (a *HealthAPIService) IsInstanceReadyExecute(r HealthAPIIsInstanceReadyRequest) (*HealthStatus, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -222,7 +223,7 @@ func (a *HealthApiService) IsInstanceReadyExecute(r HealthApiIsInstanceReadyRequ
 		localVarReturnValue  *HealthStatus
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HealthApiService.IsInstanceReady")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "HealthAPIService.IsInstanceReady")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -260,9 +261,9 @@ func (a *HealthApiService) IsInstanceReadyExecute(r HealthApiIsInstanceReadyRequ
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -279,7 +280,8 @@ func (a *HealthApiService) IsInstanceReadyExecute(r HealthApiIsInstanceReadyRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 			var v string
@@ -288,7 +290,8 @@ func (a *HealthApiService) IsInstanceReadyExecute(r HealthApiIsInstanceReadyRequ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 

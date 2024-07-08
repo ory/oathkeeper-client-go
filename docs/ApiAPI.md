@@ -1,13 +1,13 @@
-# \ApiApi
+# \ApiAPI
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**Decisions**](ApiApi.md#Decisions) | **Get** /decisions | Access Control Decision API
-[**GetRule**](ApiApi.md#GetRule) | **Get** /rules/{id} | Retrieve a Rule
-[**GetWellKnownJSONWebKeys**](ApiApi.md#GetWellKnownJSONWebKeys) | **Get** /.well-known/jwks.json | Lists Cryptographic Keys
-[**ListRules**](ApiApi.md#ListRules) | **Get** /rules | List All Rules
+[**Decisions**](ApiAPI.md#Decisions) | **Get** /decisions | Access Control Decision API
+[**GetRule**](ApiAPI.md#GetRule) | **Get** /rules/{id} | Retrieve a Rule
+[**GetWellKnownJSONWebKeys**](ApiAPI.md#GetWellKnownJSONWebKeys) | **Get** /.well-known/jwks.json | Lists Cryptographic Keys
+[**ListRules**](ApiAPI.md#ListRules) | **Get** /rules | List All Rules
 
 
 
@@ -25,21 +25,21 @@ Access Control Decision API
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/ory/oathkeeper-client-go"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ApiApi.Decisions(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ApiApi.Decisions``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.ApiAPI.Decisions(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ApiAPI.Decisions``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -84,24 +84,24 @@ Retrieve a Rule
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/ory/oathkeeper-client-go"
 )
 
 func main() {
-    id := "id_example" // string | 
+	id := "id_example" // string | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ApiApi.GetRule(context.Background(), id).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ApiApi.GetRule``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetRule`: Rule
-    fmt.Fprintf(os.Stdout, "Response from `ApiApi.GetRule`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ApiAPI.GetRule(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ApiAPI.GetRule``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetRule`: Rule
+	fmt.Fprintf(os.Stdout, "Response from `ApiAPI.GetRule`: %v\n", resp)
 }
 ```
 
@@ -154,23 +154,23 @@ Lists Cryptographic Keys
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/ory/oathkeeper-client-go"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ApiApi.GetWellKnownJSONWebKeys(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ApiApi.GetWellKnownJSONWebKeys``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetWellKnownJSONWebKeys`: JsonWebKeySet
-    fmt.Fprintf(os.Stdout, "Response from `ApiApi.GetWellKnownJSONWebKeys`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ApiAPI.GetWellKnownJSONWebKeys(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ApiAPI.GetWellKnownJSONWebKeys``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetWellKnownJSONWebKeys`: JsonWebKeySet
+	fmt.Fprintf(os.Stdout, "Response from `ApiAPI.GetWellKnownJSONWebKeys`: %v\n", resp)
 }
 ```
 
@@ -215,25 +215,25 @@ List All Rules
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/ory/oathkeeper-client-go"
 )
 
 func main() {
-    limit := int64(789) // int64 | The maximum amount of rules returned. (optional)
-    offset := int64(789) // int64 | The offset from where to start looking. (optional)
+	limit := int64(789) // int64 | The maximum amount of rules returned. (optional)
+	offset := int64(789) // int64 | The offset from where to start looking. (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ApiApi.ListRules(context.Background()).Limit(limit).Offset(offset).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ApiApi.ListRules``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ListRules`: []Rule
-    fmt.Fprintf(os.Stdout, "Response from `ApiApi.ListRules`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ApiAPI.ListRules(context.Background()).Limit(limit).Offset(offset).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ApiAPI.ListRules``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListRules`: []Rule
+	fmt.Fprintf(os.Stdout, "Response from `ApiAPI.ListRules`: %v\n", resp)
 }
 ```
 

@@ -1,11 +1,11 @@
-# \HealthApi
+# \HealthAPI
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**IsInstanceAlive**](HealthApi.md#IsInstanceAlive) | **Get** /health/alive | Check alive status
-[**IsInstanceReady**](HealthApi.md#IsInstanceReady) | **Get** /health/ready | Check readiness status
+[**IsInstanceAlive**](HealthAPI.md#IsInstanceAlive) | **Get** /health/alive | Check alive status
+[**IsInstanceReady**](HealthAPI.md#IsInstanceReady) | **Get** /health/ready | Check readiness status
 
 
 
@@ -23,23 +23,23 @@ Check alive status
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/ory/oathkeeper-client-go"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.HealthApi.IsInstanceAlive(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `HealthApi.IsInstanceAlive``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `IsInstanceAlive`: HealthStatus
-    fmt.Fprintf(os.Stdout, "Response from `HealthApi.IsInstanceAlive`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.HealthAPI.IsInstanceAlive(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `HealthAPI.IsInstanceAlive``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `IsInstanceAlive`: HealthStatus
+	fmt.Fprintf(os.Stdout, "Response from `HealthAPI.IsInstanceAlive`: %v\n", resp)
 }
 ```
 
@@ -84,23 +84,23 @@ Check readiness status
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/ory/oathkeeper-client-go"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.HealthApi.IsInstanceReady(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `HealthApi.IsInstanceReady``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `IsInstanceReady`: HealthStatus
-    fmt.Fprintf(os.Stdout, "Response from `HealthApi.IsInstanceReady`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.HealthAPI.IsInstanceReady(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `HealthAPI.IsInstanceReady``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `IsInstanceReady`: HealthStatus
+	fmt.Fprintf(os.Stdout, "Response from `HealthAPI.IsInstanceReady`: %v\n", resp)
 }
 ```
 

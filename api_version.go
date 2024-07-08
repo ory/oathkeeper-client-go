@@ -3,7 +3,7 @@ ORY Oathkeeper
 
 ORY Oathkeeper is a reverse proxy that checks the HTTP Authorization for validity against a set of rules. This service uses Hydra to validate access tokens and policies.
 
-API version: v0.40.6
+API version: v0.40.8
 Contact: hi@ory.am
 */
 
@@ -14,13 +14,13 @@ package client
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
 
-type VersionApi interface {
+type VersionAPI interface {
 
 	/*
 	GetVersion Get service version
@@ -34,24 +34,24 @@ Be aware that if you are running multiple nodes of this service, the health stat
 refer to the cluster state, only to a single instance.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return VersionApiGetVersionRequest
+	@return VersionAPIGetVersionRequest
 	*/
-	GetVersion(ctx context.Context) VersionApiGetVersionRequest
+	GetVersion(ctx context.Context) VersionAPIGetVersionRequest
 
 	// GetVersionExecute executes the request
 	//  @return Version
-	GetVersionExecute(r VersionApiGetVersionRequest) (*Version, *http.Response, error)
+	GetVersionExecute(r VersionAPIGetVersionRequest) (*Version, *http.Response, error)
 }
 
-// VersionApiService VersionApi service
-type VersionApiService service
+// VersionAPIService VersionAPI service
+type VersionAPIService service
 
-type VersionApiGetVersionRequest struct {
+type VersionAPIGetVersionRequest struct {
 	ctx context.Context
-	ApiService VersionApi
+	ApiService VersionAPI
 }
 
-func (r VersionApiGetVersionRequest) Execute() (*Version, *http.Response, error) {
+func (r VersionAPIGetVersionRequest) Execute() (*Version, *http.Response, error) {
 	return r.ApiService.GetVersionExecute(r)
 }
 
@@ -67,10 +67,10 @@ Be aware that if you are running multiple nodes of this service, the health stat
 refer to the cluster state, only to a single instance.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return VersionApiGetVersionRequest
+ @return VersionAPIGetVersionRequest
 */
-func (a *VersionApiService) GetVersion(ctx context.Context) VersionApiGetVersionRequest {
-	return VersionApiGetVersionRequest{
+func (a *VersionAPIService) GetVersion(ctx context.Context) VersionAPIGetVersionRequest {
+	return VersionAPIGetVersionRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -78,7 +78,7 @@ func (a *VersionApiService) GetVersion(ctx context.Context) VersionApiGetVersion
 
 // Execute executes the request
 //  @return Version
-func (a *VersionApiService) GetVersionExecute(r VersionApiGetVersionRequest) (*Version, *http.Response, error) {
+func (a *VersionAPIService) GetVersionExecute(r VersionAPIGetVersionRequest) (*Version, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -86,7 +86,7 @@ func (a *VersionApiService) GetVersionExecute(r VersionApiGetVersionRequest) (*V
 		localVarReturnValue  *Version
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionApiService.GetVersion")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionAPIService.GetVersion")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -124,9 +124,9 @@ func (a *VersionApiService) GetVersionExecute(r VersionApiGetVersionRequest) (*V
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}

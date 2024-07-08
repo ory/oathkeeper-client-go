@@ -8,9 +8,9 @@ api_health.go
 api_version.go
 client.go
 configuration.go
-docs/ApiApi.md
+docs/ApiAPI.md
 docs/GenericError.md
-docs/HealthApi.md
+docs/HealthAPI.md
 docs/HealthNotReadyStatus.md
 docs/HealthStatus.md
 docs/JsonWebKey.md
@@ -20,7 +20,7 @@ docs/RuleHandler.md
 docs/RuleMatch.md
 docs/Upstream.md
 docs/Version.md
-docs/VersionApi.md
+docs/VersionAPI.md
 git_push.sh
 go.mod
 go.sum
@@ -35,4 +35,7 @@ model_rule_match.go
 model_upstream.go
 model_version.go
 response.go
+test/api_api_test.go
+test/api_health_test.go
+test/api_version_test.go
 utils.go

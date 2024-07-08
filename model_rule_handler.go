@@ -3,7 +3,7 @@ ORY Oathkeeper
 
 ORY Oathkeeper is a reverse proxy that checks the HTTP Authorization for validity against a set of rules. This service uses Hydra to validate access tokens and policies.
 
-API version: v0.40.6
+API version: v0.40.8
 Contact: hi@ory.am
 */
 
@@ -14,6 +14,9 @@ package client
 import (
 	"encoding/json"
 )
+
+// checks if the RuleHandler type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RuleHandler{}
 
 // RuleHandler struct for RuleHandler
 type RuleHandler struct {
@@ -45,7 +48,7 @@ func NewRuleHandlerWithDefaults() *RuleHandler {
 
 // GetConfig returns the Config field value if set, zero value otherwise.
 func (o *RuleHandler) GetConfig() map[string]interface{} {
-	if o == nil || o.Config == nil {
+	if o == nil || IsNil(o.Config) {
 		var ret map[string]interface{}
 		return ret
 	}
@@ -55,15 +58,15 @@ func (o *RuleHandler) GetConfig() map[string]interface{} {
 // GetConfigOk returns a tuple with the Config field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RuleHandler) GetConfigOk() (map[string]interface{}, bool) {
-	if o == nil || o.Config == nil {
-		return nil, false
+	if o == nil || IsNil(o.Config) {
+		return map[string]interface{}{}, false
 	}
 	return o.Config, true
 }
 
 // HasConfig returns a boolean if a field has been set.
 func (o *RuleHandler) HasConfig() bool {
-	if o != nil && o.Config != nil {
+	if o != nil && !IsNil(o.Config) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *RuleHandler) SetConfig(v map[string]interface{}) {
 
 // GetHandler returns the Handler field value if set, zero value otherwise.
 func (o *RuleHandler) GetHandler() string {
-	if o == nil || o.Handler == nil {
+	if o == nil || IsNil(o.Handler) {
 		var ret string
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *RuleHandler) GetHandler() string {
 // GetHandlerOk returns a tuple with the Handler field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RuleHandler) GetHandlerOk() (*string, bool) {
-	if o == nil || o.Handler == nil {
+	if o == nil || IsNil(o.Handler) {
 		return nil, false
 	}
 	return o.Handler, true
@@ -95,7 +98,7 @@ func (o *RuleHandler) GetHandlerOk() (*string, bool) {
 
 // HasHandler returns a boolean if a field has been set.
 func (o *RuleHandler) HasHandler() bool {
-	if o != nil && o.Handler != nil {
+	if o != nil && !IsNil(o.Handler) {
 		return true
 	}
 
@@ -108,11 +111,19 @@ func (o *RuleHandler) SetHandler(v string) {
 }
 
 func (o RuleHandler) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o RuleHandler) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Config != nil {
+	if !IsNil(o.Config) {
 		toSerialize["config"] = o.Config
 	}
-	if o.Handler != nil {
+	if !IsNil(o.Handler) {
 		toSerialize["handler"] = o.Handler
 	}
 
@@ -120,19 +131,23 @@ func (o RuleHandler) MarshalJSON() ([]byte, error) {
 		toSerialize[key] = value
 	}
 
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
-func (o *RuleHandler) UnmarshalJSON(bytes []byte) (err error) {
+func (o *RuleHandler) UnmarshalJSON(data []byte) (err error) {
 	varRuleHandler := _RuleHandler{}
 
-	if err = json.Unmarshal(bytes, &varRuleHandler); err == nil {
-		*o = RuleHandler(varRuleHandler)
+	err = json.Unmarshal(data, &varRuleHandler)
+
+	if err != nil {
+		return err
 	}
+
+	*o = RuleHandler(varRuleHandler)
 
 	additionalProperties := make(map[string]interface{})
 
-	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "config")
 		delete(additionalProperties, "handler")
 		o.AdditionalProperties = additionalProperties
