@@ -1,7 +1,7 @@
 /*
 Ory Oathkeeper API
 
-Testing ApiAPIService
+Testing MetadataAPIService
 
 */
 
@@ -17,29 +17,16 @@ import (
 	openapiclient "github.com/ory/oathkeeper-client-go"
 )
 
-func Test_client_ApiAPIService(t *testing.T) {
+func Test_client_MetadataAPIService(t *testing.T) {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test ApiAPIService Decisions", func(t *testing.T) {
+	t.Run("Test MetadataAPIService GetVersion", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.ApiAPI.Decisions(context.Background()).Execute()
-
-		require.Nil(t, err)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test ApiAPIService GetRule", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var id string
-
-		resp, httpRes, err := apiClient.ApiAPI.GetRule(context.Background(), id).Execute()
+		resp, httpRes, err := apiClient.MetadataAPI.GetVersion(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -47,11 +34,11 @@ func Test_client_ApiAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ApiAPIService GetWellKnownJSONWebKeys", func(t *testing.T) {
+	t.Run("Test MetadataAPIService IsAlive", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.ApiAPI.GetWellKnownJSONWebKeys(context.Background()).Execute()
+		resp, httpRes, err := apiClient.MetadataAPI.IsAlive(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -59,11 +46,11 @@ func Test_client_ApiAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test ApiAPIService ListRules", func(t *testing.T) {
+	t.Run("Test MetadataAPIService IsReady", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.ApiAPI.ListRules(context.Background()).Execute()
+		resp, httpRes, err := apiClient.MetadataAPI.IsReady(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
